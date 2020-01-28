@@ -250,7 +250,7 @@ if ( ! function_exists( 'wc_api_mps_integration' ) ) {
             if ( isset( $product_info_data['catalog_visibility'] ) ) {
                 $data['catalog_visibility'] = $product_info_data['catalog_visibility'];
             }
-            
+
             if ( isset( $product_info_data['description'] ) ) {
                 $data['description'] = $product_info_data['description'];
             }
@@ -510,6 +510,17 @@ if ( ! function_exists( 'wc_api_mps_integration' ) ) {
                                             $data['sale_price'] = ( $product_info_data['sale_price'] - ( ( $product_info_data['sale_price'] * $price_adjustment_amount ) / 100 ) );
                                         }
                                     }
+                                    else if ( $price_adjustment_operation == 'multiplied' ) {
+                                        $data['regular_price'] = ( $product_info_data['regular_price'] * ( ( $product_info_data['regular_price'] * $price_adjustment_amount ) / 100 ) );
+                                        if ( isset( $product_info_data['sale_price'] ) && $product_info_data['sale_price'] ) {
+                                            $data['sale_price'] = ( $product_info_data['sale_price'] * ( ( $product_info_data['sale_price'] * $price_adjustment_amount ) / 100 ) );
+                                        }
+                                    } else if ( $price_adjustment_operation == 'divided' ) {
+                                        $data['regular_price'] = ( $product_info_data['regular_price'] / ( ( $product_info_data['regular_price'] * $price_adjustment_amount ) / 100 ) );
+                                        if ( isset( $product_info_data['sale_price'] ) && $product_info_data['sale_price'] ) {
+                                            $data['sale_price'] = ( $product_info_data['sale_price'] / ( ( $product_info_data['sale_price'] * $price_adjustment_amount ) / 100 ) );
+                                        }
+                                    }
                                 } else if ( $price_adjustment_type == 'fixed' && $price_adjustment_amount ) {
                                     if ( $price_adjustment_operation == 'plus' ) {
                                         $data['regular_price'] = $product_info_data['regular_price'] + $price_adjustment_amount;
@@ -521,7 +532,17 @@ if ( ! function_exists( 'wc_api_mps_integration' ) ) {
                                         if ( isset( $product_info_data['sale_price'] ) && $product_info_data['sale_price'] ) {
                                             $data['sale_price'] = $product_info_data['sale_price'] - $price_adjustment_amount;
                                         }
+                                    }else if ( $price_adjustment_operation == 'multiplied' ) {
+                                        $data['regular_price'] = $product_info_data['regular_price'] * $price_adjustment_amount;
+                                        if ( isset( $product_info_data['sale_price'] ) && $product_info_data['sale_price'] ) {
+                                            $data['sale_price'] = $product_info_data['sale_price'] * $price_adjustment_amount;
+                                        }
+                                    } else if ( $price_adjustment_operation == 'divided' ) {
+                                    $data['regular_price'] = $product_info_data['regular_price'] / $price_adjustment_amount;
+                                    if ( isset( $product_info_data['sale_price'] ) && $product_info_data['sale_price'] ) {
+                                        $data['sale_price'] = $product_info_data['sale_price'] / $price_adjustment_amount;
                                     }
+                                }
                                 }
                                 
                                 if ( $data['sale_price'] ) {
@@ -1006,6 +1027,10 @@ if ( ! function_exists( 'wc_api_mps_destination_variations' ) ) {
                 }
                 
                 $data = array();
+                if ( isset( $product_info_data['name'] ) ) {
+                    $data['name'] = $product_info_data['name'];
+                }
+
                 if ( isset( $product_info_data['description'] ) ) {
                     $data['description'] = $product_info_data['description'];
                 }
@@ -1129,6 +1154,16 @@ if ( ! function_exists( 'wc_api_mps_destination_variations' ) ) {
                                 if ( isset( $product_info_data['sale_price'] ) && $product_info_data['sale_price'] ) {
                                     $data['sale_price'] = ( $product_info_data['sale_price'] - ( ( $product_info_data['sale_price'] * $price_adjustment_amount ) / 100 ) );
                                 }
+                            } else if ( $price_adjustment_operation == 'multiplied' ) {
+                                $data['regular_price'] = ( $product_info_data['regular_price'] * ( ( $product_info_data['regular_price'] * $price_adjustment_amount ) / 100 ) );
+                                if ( isset( $product_info_data['sale_price'] ) && $product_info_data['sale_price'] ) {
+                                    $data['sale_price'] = ( $product_info_data['sale_price'] * ( ( $product_info_data['sale_price'] * $price_adjustment_amount ) / 100 ) );
+                                }
+                            }else if ( $price_adjustment_operation == 'divided' ) {
+                                $data['regular_price'] = ( $product_info_data['regular_price'] / ( ( $product_info_data['regular_price'] * $price_adjustment_amount ) / 100 ) );
+                                if ( isset( $product_info_data['sale_price'] ) && $product_info_data['sale_price'] ) {
+                                    $data['sale_price'] = ( $product_info_data['sale_price'] / ( ( $product_info_data['sale_price'] * $price_adjustment_amount ) / 100 ) );
+                                }
                             }
                         } else if ( $price_adjustment_type == 'fixed' && $price_adjustment_amount ) {
                             if ( $price_adjustment_operation == 'plus' ) {
@@ -1140,6 +1175,17 @@ if ( ! function_exists( 'wc_api_mps_destination_variations' ) ) {
                                 $data['regular_price'] = $product_info_data['regular_price'] - $price_adjustment_amount;
                                 if ( isset( $product_info_data['sale_price'] ) && $product_info_data['sale_price'] ) {
                                     $data['sale_price'] = $product_info_data['sale_price'] - $price_adjustment_amount;
+                                }
+                            } else if ( $price_adjustment_operation == 'multiplied' ) {
+                                $data['regular_price'] = $product_info_data['regular_price'] * $price_adjustment_amount;
+                                if ( isset( $product_info_data['sale_price'] ) && $product_info_data['sale_price'] ) {
+                                    $data['sale_price'] = $product_info_data['sale_price'] * $price_adjustment_amount;
+                                }
+                            }
+                            else if ( $price_adjustment_operation == 'divided' ) {
+                                $data['regular_price'] = $product_info_data['regular_price'] / $price_adjustment_amount;
+                                if ( isset( $product_info_data['sale_price'] ) && $product_info_data['sale_price'] ) {
+                                    $data['sale_price'] = $product_info_data['sale_price'] / $price_adjustment_amount;
                                 }
                             }
                         }

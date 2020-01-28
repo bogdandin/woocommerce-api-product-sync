@@ -169,6 +169,7 @@ if ( ! function_exists( 'wc_api_mps_callback' ) ) {
                                                     <p class="description"><?php _e( 'Exclude product meta key by comma separated.' ); ?></p>
                                                 </td>
                                             </tr>
+
                                             <tr>
                                                 <th scope="row"><label><?php _e( 'Price Adjustment' ); ?></label></th>
                                                 <td>
@@ -194,6 +195,8 @@ if ( ! function_exists( 'wc_api_mps_callback' ) ) {
                                                         $operations = array(
                                                             'plus'  => '+',
                                                             'minus' => '-',
+                                                            'multiplied' => '*',
+                                                            'divided' => '/',
                                                         );
 
                                                         foreach ( $operations as $operation_key => $operation_label ) {
